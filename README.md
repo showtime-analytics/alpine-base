@@ -1,5 +1,5 @@
-rawmind/alpine-base
-=====================
+alpine-base
+============
 
 Alpine-base image with basic extra software installed. (bash s6 openssl openssh curl and optional selfsigne_ca)
 
