@@ -1,7 +1,7 @@
 alpine-base
 ============
 
-Alpine-base image with basic extra software installed. (bash s6 openssl openssh curl and optional selfsigne_ca)
+Alpine-base image with basic extra software installed. (bash openssl openssh curl and optional selfsigne_ca)
 
 To build
 
