@@ -1,8 +1,8 @@
 FROM docker.io/alpine:3.3
 MAINTAINER Raul Sanchez <rawmind@gmail.com>
 
-# Install basic packages and skaware s6 daemon runner
-RUN apk add --update bash openssl openssh curl grep && rm -rf /var/cacke/apk/* 
+# Install basic packages
+RUN apk add --update bash openssl curl && rm -rf /var/cache/apk/* && mkdir /opt
 
 # Install selfsigned ca (optional)
 #COPY <ca.crt> /etc/ssl/certs/<ca.pem>
