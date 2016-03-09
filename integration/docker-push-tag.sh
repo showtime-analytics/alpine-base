@@ -2,8 +2,8 @@
 
 cd $(dirname $0)/..
 
-if [ ! -f repository ]; then
-    echo "File \"repository\" not found!"
+if [ -z ${DOCKER_REGISTRY+x} ]; then
+    echo "Environment variable \"GO_PIPELINE_COUNTER\" does not exist!"
     exit 1
 fi
 
@@ -17,19 +17,30 @@ if [ ! -f version ]; then
     exit 1
 fi
 
-REPOSITORY=`cat repository`
+PROJECT_NAME=$(basename `pwd`)
+
+: ${IMAGE_NAME:=${PROJECT_NAME}}
+
+REPOSITORY=${DOCKER_REGISTRY}/${IMAGE_NAME}
 BUILD_TAG=`cat build_version`
 RELEASE_TAG=`cat version`
 
 set -x
 
+if [ $DOCKER_REGISTRY = "showtimeanalytics" ]; then
+    docker login --email="${DOCKER_HUB_EMAIL}" --username="${DOCKER_HUB_USERNAME}" --password="${DOCKER_HUB_PASSWORD}"
+fi
+
+
 # Push build version
-docker push ${REPOSITORY}/${BUILD_TAG}
+docker tag -f ${PROJECT_NAME}:${BUILD_TAG} ${REPOSITORY}:${BUILD_TAG}
+docker push ${REPOSITORY}:${BUILD_TAG}
 
 # Push release version
-docker tag -f ${REPOSITORY}/${BUILD_TAG} ${REPOSITORY}/${RELEASE_TAG}
-docker push ${REPOSITORY}/${RELEASE_TAG}
+docker tag -f ${PROJECT_NAME}:${BUILD_TAG} ${REPOSITORY}:${RELEASE_TAG}
+docker push ${REPOSITORY}:${RELEASE_TAG}
 
 # Clean images
-docker rmi ${REPOSITORY}/${BUILD_TAG}
-docker rmi ${REPOSITORY}/${RELEASE_TAG}
+docker rmi ${REPOSITORY}:${RELEASE_TAG}
+docker rmi ${REPOSITORY}:${BUILD_TAG}
+docker rmi ${PROJECT_NAME}:${BUILD_TAG}
