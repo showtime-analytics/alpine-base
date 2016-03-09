@@ -17,9 +17,7 @@ if [ ! -f version ]; then
     exit 1
 fi
 
-PROJECT_NAME=$(basename `pwd`)
-
-: ${IMAGE_NAME:=${PROJECT_NAME}}
+IMAGE_NAME=alpine-base
 
 REPOSITORY=${DOCKER_REGISTRY}/${IMAGE_NAME}
 BUILD_TAG=`cat build_version`
@@ -33,14 +31,14 @@ fi
 
 
 # Push build version
-docker tag -f ${PROJECT_NAME}:${BUILD_TAG} ${REPOSITORY}:${BUILD_TAG}
+docker tag -f ${IMAGE_NAME}:${BUILD_TAG} ${REPOSITORY}:${BUILD_TAG}
 docker push ${REPOSITORY}:${BUILD_TAG}
 
 # Push release version
-docker tag -f ${PROJECT_NAME}:${BUILD_TAG} ${REPOSITORY}:${RELEASE_TAG}
+docker tag -f ${IMAGE_NAME}:${BUILD_TAG} ${REPOSITORY}:${RELEASE_TAG}
 docker push ${REPOSITORY}:${RELEASE_TAG}
 
 # Clean images
 docker rmi ${REPOSITORY}:${RELEASE_TAG}
 docker rmi ${REPOSITORY}:${BUILD_TAG}
-docker rmi ${PROJECT_NAME}:${BUILD_TAG}
+docker rmi ${IMAGE_NAME}:${BUILD_TAG}

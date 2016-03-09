@@ -7,4 +7,4 @@ if [ ! -f build_version ]; then
     exit 1
 fi
 
-(set -x; ./scripts/test.sh "" `cat build_version`)
+(set -x; ./scripts/test.sh alpine-base `cat build_version`)
