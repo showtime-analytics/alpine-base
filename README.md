@@ -1,9 +1,7 @@
 alpine-base
 ============
 
-Alpine-base image with basic openssl software installed. (bash openssl curl and optional selfsigne_ca)
-
-** SSL does not available for now **
+alpine-base image with extra software installed (bash & curl).
 
 To build
 
