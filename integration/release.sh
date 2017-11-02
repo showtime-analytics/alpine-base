@@ -3,7 +3,7 @@
 cd $(dirname $0)/..
 
 if [ -z ${DOCKER_REGISTRY+x} ]; then
-    echo "Environment variable \"GO_PIPELINE_COUNTER\" does not exist!"
+    echo "Environment variable \"DOCKER_REGISTRY\" does not exist!"
     exit 1
 fi
 

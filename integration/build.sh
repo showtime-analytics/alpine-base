@@ -9,6 +9,6 @@ cd $(dirname $0)/..
 
 VERSION=`cat version`-${GO_PIPELINE_COUNTER}
 
-(set -x; ./scripts/build.sh "" alpine-base $VERSION)
+(set -x; ./scripts/build.sh "" ${DOCKER_REGISTRY}/alpine-base $VERSION)
 
 echo "${VERSION}" > build_version
