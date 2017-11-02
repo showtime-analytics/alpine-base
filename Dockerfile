@@ -1,4 +1,4 @@
-FROM docker.io/alpine:3.4
+FROM docker.io/alpine:3.6
 MAINTAINER Alberto Gregoris <alberto@showtimeanalytics.com>
 
 # Install basic packages
